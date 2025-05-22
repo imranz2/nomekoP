@@ -22,7 +22,9 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             System.out.println(e.getMessage());
         }
         pokemon.add(new Pokemon("charizard", "fire", 170, "Flamethrower", 40, "Focus Blast", 90, "Scratch", 30)); //90 dmg with 50% of missing, All jhave chanceo f missing except Scratch
-        pokemon.add(new Pokemon("greninja", ))
+        pokemon.add(new Pokemon("greninja", "water", 130, "Water Shuriken", 50, "Water Gun", 0, "Tackle", 25));
+        //pokemon.add(new Pokemon("Mewtwo", ))
+        pokemon.add(new Pokemon("goku", "everything", 1000, "Kamehameha", 75, "Kaioken", 0, "Spirit Bomb", 500)); // Spirit bomb with 10% chance, Kmehame with75% chance
     }
 
 
