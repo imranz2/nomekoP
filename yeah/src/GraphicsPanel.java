@@ -17,19 +17,32 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         timer = new Timer(4, this);
         timer.start();
         try {
-            background = ImageIO.read(new File("src/background.png"));
+            background = ImageIO.read(new File("yeah/src/background.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        pokemon.add(new Pokemon("charizard", "fire", 170, "Flamethrower", 40, "Focus Blast", 90, "Scratch", 30)); //90 dmg with 50% of missing, All jhave chanceo f missing except Scratch
+        pokemon.add(new Pokemon("charizard", "fire", 170, "Flamethrower", 40, "Focus Blast", 90, "Roar", 30)); //90 dmg with 50% of missing, All jhave chanceo f missing except Scratch
         pokemon.add(new Pokemon("greninja", "water", 130, "Water Shuriken", 50, "Water Gun", 0, "Tackle", 25));
-        //pokemon.add(new Pokemon("Mewtwo", ))
         pokemon.add(new Pokemon("goku", "everything", 1000, "Kamehameha", 75, "Kaioken", 0, "Spirit Bomb", 500)); // Spirit bomb with 10% chance, Kmehame with75% chance
+        pressedKeys = new boolean[128];
+        addKeyListener(this);
+        addMouseListener(this);
+        setFocusable(true);
+        requestFocusInWindow();
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        //
+        g.drawImage(background, -300, -170, 1700, 880, null);
     }
 
 
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+        repaint();
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {}
