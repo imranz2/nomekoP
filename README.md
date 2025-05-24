@@ -1,2 +1,2 @@
 # nomekoP
-yeah
+yeah, please don't strike us down
