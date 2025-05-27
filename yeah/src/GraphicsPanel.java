@@ -12,8 +12,11 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private Timer timer;
     private boolean[] pressedKeys;
     private ArrayList<Pokemon> pokemon = new ArrayList<>(); //All pokemon 150+;
+    private static int count = 1;
+    private Player player;
 
     public GraphicsPanel() {
+        player = new Player();
         timer = new Timer(4, this);
         timer.start();
         try {
@@ -36,6 +39,8 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         super.paintComponent(g);
         //
         g.drawImage(background, -300, -170, 1700, 880, null);
+        g.drawImage(player.getForward().getActiveFrame(), 400, 200, 90, 90, null);
+
     }
 
 
