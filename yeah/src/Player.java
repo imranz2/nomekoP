@@ -35,6 +35,9 @@ public class Player {
             String filename2 = "yeah/src/Left" + j + ".png";
             try {
                 images2.add(ImageIO.read(new File(filename2)));
+                if (j == 2){
+                    images2.add(ImageIO.read(new File("yeah/src/Left1.png")));
+                }
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -44,6 +47,9 @@ public class Player {
             String filename3 = "yeah/src/Right" + k + ".png";
             try {
                 images3.add(ImageIO.read(new File(filename3)));
+                if (k == 2){
+                    images3.add(ImageIO.read(new File("yeah/src/Right1.png")));
+                }
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -53,6 +59,9 @@ public class Player {
             String filename4 = "yeah/src/Back" + g + ".png";
             try {
                 images4.add(ImageIO.read(new File(filename4)));
+                if (g == 2){
+                    images4.add(ImageIO.read(new File("yeah/src/Back1.png")));
+                }
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }

@@ -9,11 +9,14 @@ import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private BufferedImage background;
+    private BufferedImage idle;
     private Timer timer;
     private boolean[] pressedKeys;
     private ArrayList<Pokemon> pokemon = new ArrayList<>(); //All pokemon 150+;
     private static int count = 1;
     private Player player;
+    private int xBack = -300;
+    private int yBack = -170;
 
     public GraphicsPanel() {
         player = new Player();
@@ -21,6 +24,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         timer.start();
         try {
             background = ImageIO.read(new File("yeah/src/background.png"));
+            idle = ImageIO.read(new File("yeah/src/Forward1.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -34,12 +38,43 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         requestFocusInWindow();
     }
 
+    /*
+    - Create one rectangle object from x= -265 from 0,0. So 265 right of 0,0. Tall = -300. 300 down from 0,0. Wide = Ends at -665. So like 265 to 665. you got it
+    -
+    */
+
+
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //
-        g.drawImage(background, -300, -170, 1700, 880, null);
-        g.drawImage(player.getForward().getActiveFrame(), 400, 200, 90, 90, null);
+        g.drawImage(background, 0, 0, 1700, 880, null);
+        //g.drawImage(background, xBack, yBack, 1700, 880, null);
+
+
+        if (pressedKeys[65]) { //A
+            g.drawImage(player.getLeft().getActiveFrame(), 470, 200, 90, 90, null);
+            xBack += 3;
+        } else
+        // player moves right (D)
+        if (pressedKeys[68]) {
+            g.drawImage(player.getRight().getActiveFrame(), 470, 200, 90, 90, null);
+            xBack -= 3;
+        } else
+
+        // player moves up (W)
+        if (pressedKeys[87]) {
+            g.drawImage(player.getBack().getActiveFrame(), 470, 200, 90, 90, null);
+            yBack += 3;
+        } else
+
+        // player moves down (S)
+        if (pressedKeys[83]) {
+            g.drawImage(player.getForward().getActiveFrame(), 470, 200, 90, 90, null);
+            yBack -= 3;
+        } else {
+            g.drawImage(idle, 470, 200, 90, 90, null);
+        }
 
     }
 
@@ -52,9 +87,20 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     @Override
     public void keyTyped(KeyEvent e) {}
     @Override
-    public void keyPressed(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {
+        // see this for all keycodes: https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
+        // A = 65, D = 68, S = 83, W = 87, left = 37, up = 38, right = 39, down = 40, space = 32, enter = 10
+        int key = e.getKeyCode();
+        System.out.println(key);
+        pressedKeys[key] = true;
+    }
+
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+        pressedKeys[key] = false;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {}
     @Override
