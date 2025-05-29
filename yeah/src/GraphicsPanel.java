@@ -15,13 +15,16 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private ArrayList<Pokemon> pokemon = new ArrayList<>(); //All pokemon 150+;
     private static int count = 1;
     private Player player;
-    private int xBack = -300;
-    private int yBack = -170;
+    private int xBack = -780;
+    private int yBack = -670;
+    private boolean collide = false;
 
     public GraphicsPanel() {
         player = new Player();
         timer = new Timer(4, this);
         timer.start();
+        Rectangle character = new Rectangle(470, 200, 90, 90);
+        Rectangle trees = new Rectangle(-665, -506, 1310, 735);
         try {
             background = ImageIO.read(new File("yeah/src/background.png"));
             idle = ImageIO.read(new File("yeah/src/Forward1.png"));
@@ -39,8 +42,8 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     }
 
     /*
-    - Create one rectangle object from x= -265 from 0,0. So 265 right of 0,0. Tall = -300. 300 down from 0,0. Wide = Ends at -665. So like 265 to 665. you got it
-    -
+    - -865, -560. One rect. Width = ended at -1180, -560. Height went down to -820
+    - Backround rect. Start at -665, -560. moves to -1975, -1295
     */
 
 
@@ -48,8 +51,9 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, 1700, 880, null);
-        //g.drawImage(background, xBack, yBack, 1700, 880, null);
+        g.drawImage(background, -1975, -1295, 2700, 1750, null);
+
+        //g.drawImage(background, xBack, yBack, 2700, 1750, null);
 
 
         if (pressedKeys[65]) { //A
