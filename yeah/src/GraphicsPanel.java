@@ -18,6 +18,10 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private int xBack = -780;
     private int yBack = -670;
     private boolean collide = false;
+    private boolean touchingLeft;
+    private boolean touchingRight;
+    private boolean touchingTop;
+    private boolean touchingBottom;
 
     public GraphicsPanel() {
         player = new Player();
@@ -46,7 +50,9 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     - Backround rect. Start at -665, -560. moves to -1975, -1295
     */
 
-
+    public boolean isTouchingLeft() {
+        if ()
+    }
 
     @Override
     public void paintComponent(Graphics g) {
