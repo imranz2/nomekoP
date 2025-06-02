@@ -22,13 +22,20 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private boolean touchingRight;
     private boolean touchingTop;
     private boolean touchingBottom;
+    private int leftSide = -115;
+    private int rightSide = 1200;
+    private int topSide = -110;
+    private int bottomSide = 635;
+    private int house1Bottom = 140;
+    private int house1Left = 85;
+    private int house1Right = 400;
 
     public GraphicsPanel() {
         player = new Player();
         timer = new Timer(4, this);
         timer.start();
         Rectangle character = new Rectangle(470, 200, 90, 90);
-        Rectangle trees = new Rectangle(-665, -506, 1310, 735);
+        //Rectangle house = new Rectangle(-665, -506, 1310, 735);
         try {
             background = ImageIO.read(new File("yeah/src/background.png"));
             idle = ImageIO.read(new File("yeah/src/Forward1.png"));
@@ -50,41 +57,89 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     - Backround rect. Start at -665, -560. moves to -1975, -1295
     */
 
-    public boolean isTouchingLeft() {
-        if ()
-    }
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, -1975, -1295, 2700, 1750, null);
+        //g.drawImage(background, -865, -560, 2700, 1750, null);
 
-        //g.drawImage(background, xBack, yBack, 2700, 1750, null);
+        g.drawImage(background, xBack, yBack, 2700, 1750, null);
 
 
         if (pressedKeys[65]) { //A
             g.drawImage(player.getLeft().getActiveFrame(), 470, 200, 90, 90, null);
             xBack += 3;
+            leftSide += 3;
+            rightSide += 3;
+            house1Left += 3;
+            house1Right += 3;
+            if (leftSide >= 470) {
+                house1Left -= 3;
+                house1Right -= 3;
+                rightSide -= 3;
+                leftSide -= 3;
+                xBack -= 3;
+            }
         } else
         // player moves right (D)
         if (pressedKeys[68]) {
             g.drawImage(player.getRight().getActiveFrame(), 470, 200, 90, 90, null);
             xBack -= 3;
+            leftSide -= 3;
+            rightSide -= 3;
+            house1Left -= 3;
+            house1Right -= 3;
+            if (rightSide <= 560){
+                house1Left += 3;
+                house1Right += 3;
+                leftSide += 3;
+                rightSide += 3;
+                xBack += 3;
+            }
         } else
 
         // player moves up (W)
         if (pressedKeys[87]) {
             g.drawImage(player.getBack().getActiveFrame(), 470, 200, 90, 90, null);
             yBack += 3;
+            topSide += 3;
+            bottomSide += 3;
+            house1Bottom += 3;
+            if (topSide >= 200){
+                house1Bottom -=3;
+                topSide -= 3;
+                bottomSide -= 3;
+                yBack -= 3;
+            }
+
         } else
 
         // player moves down (S)
         if (pressedKeys[83]) {
             g.drawImage(player.getForward().getActiveFrame(), 470, 200, 90, 90, null);
             yBack -= 3;
+            bottomSide -= 3;
+            topSide -= 3;
+            house1Bottom -=3;
+            if (bottomSide <= 290) {
+                house1Bottom += 3;
+                topSide += 3;
+                bottomSide += 3;
+                yBack += 3;
+            }
+
         } else {
             g.drawImage(idle, 470, 200, 90, 90, null);
         }
+
+
+        if (200 < house1Bottom){
+            if (house1Right >= 470) {
+                xBack -= 3;
+                house1Right -= 3;
+                house1Left -= 3;
+            }
+        }
+
 
     }
 
