@@ -133,10 +133,33 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 
 
         if (200 < house1Bottom){
-            if (house1Right >= 470) {
+            if (house1Right < 470) {
+
+            } else if (house1Left > 560){
+
+            }  else if (house1Left <= 470+90 && house1Left > 470){
+                xBack += 3;
+                leftSide += 3;
+                rightSide += 3;
+                house1Left += 3;
+                house1Right += 3;
+            } else if (house1Right > 470+90 && house1Left < 470) {
+                yBack -= 3;
+                bottomSide -= 3;
+                topSide -= 3;
+                house1Bottom -= 3;
+            } else if (house1Right >= 470) {
                 xBack -= 3;
+                leftSide -= 3;
+                rightSide -=3;
                 house1Right -= 3;
                 house1Left -= 3;
+            } else if (house1Left <= 470+90 && house1Left > 470){
+                xBack += 3;
+                leftSide += 3;
+                rightSide += 3;
+                house1Left += 3;
+                house1Right += 3;
             }
         }
 
