@@ -26,9 +26,13 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private int rightSide = 1200;
     private int topSide = -110;
     private int bottomSide = 635;
-    private int house1Bottom = 140;
+    private int house1Bottom = 100;
     private int house1Left = 85;
     private int house1Right = 400;
+    private int house2Bottom = 265;
+    private int house2Left = 818;
+    private int house2Right = 1195;
+    private int house2Top = -90;
 
     public GraphicsPanel() {
         player = new Player();
@@ -55,12 +59,14 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     /*
     - -865, -560. One rect. Width = ended at -1180, -560. Height went down to -820
     - Backround rect. Start at -665, -560. moves to -1975, -1295
+
+    - From -1598, -580. To -1905, -935
     */
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //g.drawImage(background, -865, -560, 2700, 1750, null);
+        //g.drawImage(background, -1598, -580, 2700, 1750, null);
 
         g.drawImage(background, xBack, yBack, 2700, 1750, null);
 
@@ -72,9 +78,13 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             rightSide += 3;
             house1Left += 3;
             house1Right += 3;
+            house2Left += 3;
+            house2Right += 3;
             if (leftSide >= 470) {
                 house1Left -= 3;
                 house1Right -= 3;
+                house2Left -= 3;
+                house2Right -= 3;
                 rightSide -= 3;
                 leftSide -= 3;
                 xBack -= 3;
@@ -88,9 +98,13 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             rightSide -= 3;
             house1Left -= 3;
             house1Right -= 3;
+            house2Left -= 3;
+            house2Right -= 3;
             if (rightSide <= 560){
                 house1Left += 3;
                 house1Right += 3;
+                house2Left += 3;
+                house2Right += 3;
                 leftSide += 3;
                 rightSide += 3;
                 xBack += 3;
@@ -104,8 +118,12 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             topSide += 3;
             bottomSide += 3;
             house1Bottom += 3;
+            house2Bottom += 3;
+            house2Top += 3;
             if (topSide >= 200){
                 house1Bottom -=3;
+                house2Bottom -=3;
+                house2Top -= 3;
                 topSide -= 3;
                 bottomSide -= 3;
                 yBack -= 3;
@@ -120,13 +138,16 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             bottomSide -= 3;
             topSide -= 3;
             house1Bottom -=3;
+            house2Bottom -=3;
+            house2Top -=3;
             if (bottomSide <= 290) {
                 house1Bottom += 3;
+                house2Bottom += 3;
+                house2Top += 3;
                 topSide += 3;
                 bottomSide += 3;
                 yBack += 3;
             }
-
         } else {
             g.drawImage(idle, 470, 200, 90, 90, null);
         }
@@ -143,27 +164,72 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
                 rightSide += 3;
                 house1Left += 3;
                 house1Right += 3;
+                house2Left += 3;
+                house2Right += 3;
             } else if (house1Right > 470+90 && house1Left < 470) {
                 yBack -= 3;
                 bottomSide -= 3;
                 topSide -= 3;
                 house1Bottom -= 3;
+                house2Bottom -= 3;
+                house2Top -=3;
             } else if (house1Right >= 470) {
                 xBack -= 3;
                 leftSide -= 3;
                 rightSide -=3;
                 house1Right -= 3;
                 house1Left -= 3;
+                house2Right -= 3;
+                house2Left -=3;
             } else if (house1Left <= 470+90 && house1Left > 470){
                 xBack += 3;
                 leftSide += 3;
                 rightSide += 3;
                 house1Left += 3;
                 house1Right += 3;
+                house2Left += 3;
+                house2Right += 3;
             }
         }
 
 
+        if (house2Left > 290){
+
+        } else if (house2Right < 200){
+
+        } else if (house2Left <= 290 && house2Left >= 200){
+            xBack += 3;
+            leftSide += 3;
+            rightSide += 3;
+            house2Left += 3;
+            house2Right += 3;
+            house1Left += 3;
+            house1Right += 3;
+        } else if (house2Left < 200 && house2Right > 290){
+            if (house2Top < 290 && house2Top > 200){
+                yBack += 3;
+                bottomSide += 3;
+                topSide += 3;
+                house1Bottom += 3;
+                house2Bottom += 3;
+                house2Top += 3;
+            } else if (house2Bottom < 290 && house2Bottom > 200){
+                yBack -= 3;
+                bottomSide -= 3;
+                topSide -= 3;
+                house1Bottom -= 3;
+                house2Bottom -= 3;
+                house2Top -=3;
+            }
+        } else if (house2Right <= 290 && house2Right > 200){
+            xBack -= 3;
+            leftSide -= 3;
+            rightSide -=3;
+            house1Right -= 3;
+            house1Left -= 3;
+            house2Right -= 3;
+            house2Left -=3;
+        }
     }
 
 
