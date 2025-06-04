@@ -29,10 +29,10 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private int house1Bottom = 100;
     private int house1Left = 85;
     private int house1Right = 400;
-    private int house2Bottom = 265;
-    private int house2Left = 818;
+    private int house2Bottom = 230;
+    private int house2Left = 550;
     private int house2Right = 1195;
-    private int house2Top = -90;
+    private int house2Top = -120;
 
     public GraphicsPanel() {
         player = new Player();
@@ -197,7 +197,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 
         } else if (house2Right < 200){
 
-        } else if (house2Left <= 290 && house2Left >= 200){
+        } else if (house2Left <= 290 && house2Left >= 200 && house2Top < 200 && house2Bottom > 290){
             xBack += 3;
             leftSide += 3;
             rightSide += 3;
@@ -221,10 +221,10 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
                 house2Bottom -= 3;
                 house2Top -=3;
             }
-        } else if (house2Right <= 290 && house2Right > 200){
+        } else if (house2Right <= 290 && house2Right > 200 && house2Top < 200 && house2Bottom > 290){
             xBack -= 3;
             leftSide -= 3;
-            rightSide -=3;
+            rightSide -= 3;
             house1Right -= 3;
             house1Left -= 3;
             house2Right -= 3;
@@ -237,7 +237,6 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
-
     @Override
     public void keyTyped(KeyEvent e) {}
     @Override
