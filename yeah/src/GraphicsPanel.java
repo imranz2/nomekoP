@@ -15,6 +15,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private ArrayList<Pokemon> pokemon = new ArrayList<>(); //All pokemon 150+;
     private static int count = 1;
     private Player player;
+    private Rectangle character;
     private int xBack = -780;
     private int yBack = -670;
     private boolean collide = false;
@@ -26,20 +27,30 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private int rightSide = 1200;
     private int topSide = -110;
     private int bottomSide = 635;
+
     private int house1Bottom = 100;
     private int house1Left = 85;
     private int house1Right = 400;
+    private Rectangle door1;
+    private int door1X = 280;
+    private int door1Y = 80;
+
     private int house2Bottom = 230;
     private int house2Left = 550;
     private int house2Right = 1195;
     private int house2Top = -120;
+    private Rectangle door2;
+    private int door2X = 1010;
+    private int door2Y = 210;
 
     public GraphicsPanel() {
         player = new Player();
         timer = new Timer(4, this);
         timer.start();
-        Rectangle character = new Rectangle(470, 200, 90, 90);
+        character = new Rectangle(470, 200, 90, 90);
         //Rectangle house = new Rectangle(-665, -506, 1310, 735);
+        door1 = new Rectangle(280, 80, 55, 55);
+        door2 = new Rectangle(1010, 210, 55, 55);
         try {
             background = ImageIO.read(new File("yeah/src/background.png"));
             idle = ImageIO.read(new File("yeah/src/Forward1.png"));
@@ -61,14 +72,17 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     - Backround rect. Start at -665, -560. moves to -1975, -1295
 
     - From -1598, -580. To -1905, -935
+
+    - Door1; From -1060, -750 to -1115, -805
+    - Door2; From -1790, -880 to -1845. -935
     */
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //g.drawImage(background, -1598, -580, 2700, 1750, null);
+        g.drawImage(background, -1845, -935, 2700, 1750, null);
 
-        g.drawImage(background, xBack, yBack, 2700, 1750, null);
+        //g.drawImage(background, xBack, -yBack, 2700, 1750, null);
 
 
         if (pressedKeys[65]) { //A
@@ -80,7 +94,11 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             house1Right += 3;
             house2Left += 3;
             house2Right += 3;
+            door1 = new Rectangle(door1X + 3, door1Y, 55, 55);
+            door2 = new Rectangle(door2X + 3, door2Y, 55, 55);
             if (leftSide >= 470) {
+                door1 = new Rectangle(door1X - 3, door1Y, 55, 55);
+                door2 = new Rectangle(door2X - 3, door2Y, 55, 55);
                 house1Left -= 3;
                 house1Right -= 3;
                 house2Left -= 3;
@@ -100,7 +118,11 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             house1Right -= 3;
             house2Left -= 3;
             house2Right -= 3;
+            door1 = new Rectangle(door1X - 3, door1Y, 55, 55);
+            door2 = new Rectangle(door2X - 3, door2Y, 55, 55);
             if (rightSide <= 560){
+                door1 = new Rectangle(door1X + 3, door1Y, 55, 55);
+                door2 = new Rectangle(door2X + 3, door2Y, 55, 55);
                 house1Left += 3;
                 house1Right += 3;
                 house2Left += 3;
@@ -120,7 +142,11 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             house1Bottom += 3;
             house2Bottom += 3;
             house2Top += 3;
+            door1 = new Rectangle(door1X, door1Y+3, 55, 55);
+            door2 = new Rectangle(door2X, door2Y+3, 55, 55);
             if (topSide >= 200){
+                door1 = new Rectangle(door1X, door1Y-3, 55, 55);
+                door2 = new Rectangle(door2X, door2Y-3, 55, 55);
                 house1Bottom -=3;
                 house2Bottom -=3;
                 house2Top -= 3;
@@ -140,13 +166,23 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             house1Bottom -=3;
             house2Bottom -=3;
             house2Top -=3;
+            door1 = new Rectangle(door1X, door1Y-3, 55, 55);
+            door2 = new Rectangle(door2X, door2Y-3, 55, 55);
             if (bottomSide <= 290) {
+                door1 = new Rectangle(door1X, door1Y+3, 55, 55);
+                door2 = new Rectangle(door2X, door2Y+3, 55, 55);
                 house1Bottom += 3;
                 house2Bottom += 3;
                 house2Top += 3;
                 topSide += 3;
                 bottomSide += 3;
                 yBack += 3;
+            }
+        } else if (pressedKeys[32] && door1.intersects(character)) {
+            try {
+                background = ImageIO.read(new File("yeah/src/room1.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
         } else {
             g.drawImage(idle, 470, 200, 90, 90, null);
