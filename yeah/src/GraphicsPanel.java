@@ -13,16 +13,11 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private Timer timer;
     private boolean[] pressedKeys;
     private ArrayList<Pokemon> pokemon = new ArrayList<>(); //All pokemon 150+;
-    private static int count = 1;
     private Player player;
     private Rectangle character;
     private int xBack = -780;
     private int yBack = -670;
-    private boolean collide = false;
-    private boolean touchingLeft;
-    private boolean touchingRight;
-    private boolean touchingTop;
-    private boolean touchingBottom;
+
     private int leftSide = -115;
     private int rightSide = 1200;
     private int topSide = -110;
@@ -42,6 +37,9 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private Rectangle door2;
     private int door2X = 1010;
     private int door2Y = 210;
+
+    private int backWidth = 2700;
+    private int backHeight = 1750;
 
     public GraphicsPanel() {
         player = new Player();
@@ -77,106 +75,61 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     - Door2; From -1790, -880 to -1845. -935
     */
 
+    public void updateX(int num){
+        xBack += num;
+        leftSide += num;
+        rightSide += num;
+        house1Left += num;
+        house1Right += num;
+        house2Left += num;
+        house2Right += num;
+        door1X += num;
+        door2X += num;
+    }
+
+    public void updateY(int num){
+        yBack += num;
+        topSide += num;
+        bottomSide += num;
+        house1Bottom += num;
+        house2Bottom += num;
+        house2Top += num;
+        door1Y += num;
+        door2Y += num;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, -1845, -935, 2700, 1750, null);
-
-        //g.drawImage(background, xBack, -yBack, 2700, 1750, null);
-
+        //g.drawImage(background, -1845, -935, 2700, 1750, null);
+        g.drawImage(background, xBack, yBack, backWidth, backHeight, null);
+        g.drawRect(door1X, door1Y, 55, 55);
+        g.drawRect(470, 200, 90, 90);
 
         if (pressedKeys[65]) { //A
             g.drawImage(player.getLeft().getActiveFrame(), 470, 200, 90, 90, null);
-            xBack += 3;
-            leftSide += 3;
-            rightSide += 3;
-            house1Left += 3;
-            house1Right += 3;
-            house2Left += 3;
-            house2Right += 3;
-            door1 = new Rectangle(door1X + 3, door1Y, 55, 55);
-            door2 = new Rectangle(door2X + 3, door2Y, 55, 55);
+            updateX(3);
             if (leftSide >= 470) {
-                door1 = new Rectangle(door1X - 3, door1Y, 55, 55);
-                door2 = new Rectangle(door2X - 3, door2Y, 55, 55);
-                house1Left -= 3;
-                house1Right -= 3;
-                house2Left -= 3;
-                house2Right -= 3;
-                rightSide -= 3;
-                leftSide -= 3;
-                xBack -= 3;
+                updateX(-3);
             }
-        } else
-        // player moves right (D)
-        if (pressedKeys[68]) {
+        } else if (pressedKeys[68]) {
             g.drawImage(player.getRight().getActiveFrame(), 470, 200, 90, 90, null);
-            xBack -= 3;
-            leftSide -= 3;
-            rightSide -= 3;
-            house1Left -= 3;
-            house1Right -= 3;
-            house2Left -= 3;
-            house2Right -= 3;
-            door1 = new Rectangle(door1X - 3, door1Y, 55, 55);
-            door2 = new Rectangle(door2X - 3, door2Y, 55, 55);
+            updateX(-3);
             if (rightSide <= 560){
-                door1 = new Rectangle(door1X + 3, door1Y, 55, 55);
-                door2 = new Rectangle(door2X + 3, door2Y, 55, 55);
-                house1Left += 3;
-                house1Right += 3;
-                house2Left += 3;
-                house2Right += 3;
-                leftSide += 3;
-                rightSide += 3;
-                xBack += 3;
+                updateX(3);
             }
-        } else
-
-        // player moves up (W)
-        if (pressedKeys[87]) {
+        } else if (pressedKeys[87]) {
             g.drawImage(player.getBack().getActiveFrame(), 470, 200, 90, 90, null);
-            yBack += 3;
-            topSide += 3;
-            bottomSide += 3;
-            house1Bottom += 3;
-            house2Bottom += 3;
-            house2Top += 3;
-            door1 = new Rectangle(door1X, door1Y+3, 55, 55);
-            door2 = new Rectangle(door2X, door2Y+3, 55, 55);
+            updateY(3);
             if (topSide >= 200){
-                door1 = new Rectangle(door1X, door1Y-3, 55, 55);
-                door2 = new Rectangle(door2X, door2Y-3, 55, 55);
-                house1Bottom -=3;
-                house2Bottom -=3;
-                house2Top -= 3;
-                topSide -= 3;
-                bottomSide -= 3;
-                yBack -= 3;
+                updateY(-3);
+
             }
-
-        } else
-
-        // player moves down (S)
-        if (pressedKeys[83]) {
+        } else if (pressedKeys[83]) {
             g.drawImage(player.getForward().getActiveFrame(), 470, 200, 90, 90, null);
-            yBack -= 3;
-            bottomSide -= 3;
-            topSide -= 3;
-            house1Bottom -=3;
-            house2Bottom -=3;
-            house2Top -=3;
-            door1 = new Rectangle(door1X, door1Y-3, 55, 55);
-            door2 = new Rectangle(door2X, door2Y-3, 55, 55);
+            updateY(-3);
             if (bottomSide <= 290) {
-                door1 = new Rectangle(door1X, door1Y+3, 55, 55);
-                door2 = new Rectangle(door2X, door2Y+3, 55, 55);
-                house1Bottom += 3;
-                house2Bottom += 3;
-                house2Top += 3;
-                topSide += 3;
-                bottomSide += 3;
-                yBack += 3;
+                updateY(3);
             }
         } else if (pressedKeys[32] && door1.intersects(character)) {
             try {
@@ -184,87 +137,39 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
+            xBack = -800;
+            yBack = -690;
         } else {
             g.drawImage(idle, 470, 200, 90, 90, null);
         }
 
+        door1 = new Rectangle(door1X, door1Y, 55, 55);
+        door2 = new Rectangle(door2X, door2Y, 55, 55);
 
         if (200 < house1Bottom){
-            if (house1Right < 470) {
-
-            } else if (house1Left > 560){
-
-            }  else if (house1Left <= 470+90 && house1Left > 470){
-                xBack += 3;
-                leftSide += 3;
-                rightSide += 3;
-                house1Left += 3;
-                house1Right += 3;
-                house2Left += 3;
-                house2Right += 3;
+            if (house1Right < 470) { } else if (house1Left > 560){ }  else
+                if (house1Left <= 470+90 && house1Left > 470){
+                updateX(3);
             } else if (house1Right > 470+90 && house1Left < 470) {
-                yBack -= 3;
-                bottomSide -= 3;
-                topSide -= 3;
-                house1Bottom -= 3;
-                house2Bottom -= 3;
-                house2Top -=3;
+                updateY(-3);
             } else if (house1Right >= 470) {
-                xBack -= 3;
-                leftSide -= 3;
-                rightSide -=3;
-                house1Right -= 3;
-                house1Left -= 3;
-                house2Right -= 3;
-                house2Left -=3;
+                updateX(-3);
             } else if (house1Left <= 470+90 && house1Left > 470){
-                xBack += 3;
-                leftSide += 3;
-                rightSide += 3;
-                house1Left += 3;
-                house1Right += 3;
-                house2Left += 3;
-                house2Right += 3;
+                updateX(3);
             }
         }
 
-
-        if (house2Left > 290){
-
-        } else if (house2Right < 200){
-
-        } else if (house2Left <= 290 && house2Left >= 200 && house2Top < 200 && house2Bottom > 290){
-            xBack += 3;
-            leftSide += 3;
-            rightSide += 3;
-            house2Left += 3;
-            house2Right += 3;
-            house1Left += 3;
-            house1Right += 3;
+        if (house2Left > 290){ } else if (house2Right < 200){ } else
+            if (house2Left <= 290 && house2Left >= 200 && house2Top < 200 && house2Bottom > 290){
+            updateX(3);
         } else if (house2Left < 200 && house2Right > 290){
             if (house2Top < 290 && house2Top > 200){
-                yBack += 3;
-                bottomSide += 3;
-                topSide += 3;
-                house1Bottom += 3;
-                house2Bottom += 3;
-                house2Top += 3;
+                updateY(3);
             } else if (house2Bottom < 290 && house2Bottom > 200){
-                yBack -= 3;
-                bottomSide -= 3;
-                topSide -= 3;
-                house1Bottom -= 3;
-                house2Bottom -= 3;
-                house2Top -=3;
+                updateY(-3);
             }
         } else if (house2Right <= 290 && house2Right > 200 && house2Top < 200 && house2Bottom > 290){
-            xBack -= 3;
-            leftSide -= 3;
-            rightSide -= 3;
-            house1Right -= 3;
-            house1Left -= 3;
-            house2Right -= 3;
-            house2Left -=3;
+            updateX(3);
         }
     }
 
