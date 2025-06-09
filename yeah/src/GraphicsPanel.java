@@ -50,7 +50,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         door1 = new Rectangle(280, 80, 55, 55);
         door2 = new Rectangle(1010, 210, 55, 55);
         try {
-            background = ImageIO.read(new File("yeah/src/background.png"));
+            background = ImageIO.read(new File("yeah/src/background1.png"));
             idle = ImageIO.read(new File("yeah/src/Forward1.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
