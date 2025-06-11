@@ -8,8 +8,7 @@ import java.io.IOException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
-import java.util.ArrayList;
+import javax.sound.sampled.*;
 
 public class GraphicsPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private BufferedImage background;
@@ -132,6 +131,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         g.drawRect(door1X, door1Y, 55, 55);
         g.drawRect(470, 200, 90, 90);
 
+
         if (pressedKeys[65]) { //A
             g.drawImage(player.getLeft().getActiveFrame(), 470, 200, 90, 90, null);
             updateX(3);
@@ -244,7 +244,21 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             updateX(3);
         }
     }
-    private void playMusic() {
+
+    public void buzz() {
+        File wrong = new File("yeah\\src\\buzzer.wav");
+        try {
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(wrong);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public void playMusic() {
         File audioFile = new File("yeah\\src\\music.wav");
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -258,13 +272,13 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     }
 
 
-
     public void reset(){
         try {
             background = ImageIO.read(new File("yeah/src/background1.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        buzz();
     }
 
     public void change (int num){
