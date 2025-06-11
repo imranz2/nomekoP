@@ -1,2 +1,2 @@
 # nomekoP
-yeah, please don't strike us down
+except theres no "nomekoP"
