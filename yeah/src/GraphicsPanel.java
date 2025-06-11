@@ -5,6 +5,10 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
@@ -63,6 +67,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
+        playMusic();
     }
 
     /*
@@ -172,6 +177,19 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             updateX(3);
         }
     }
+    private void playMusic() {
+        File audioFile = new File("yeah\\src\\music.wav");
+        try {
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY); // repeats song
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
 
     @Override
