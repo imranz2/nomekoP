@@ -12,7 +12,6 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
     private BufferedImage idle;
     private Timer timer;
     private boolean[] pressedKeys;
-   // private ArrayList<Pokemon> pokemon = new ArrayList<>(); //All pokemon 150+;
     private Player player;
     private Rectangle character;
     private int xBack = -780;
@@ -40,6 +39,19 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
 
     private int backWidth = 2700;
     private int backHeight = 1750;
+    private static int num = 1;
+
+    private boolean room1 = true;
+    private boolean room2 = false;
+    private boolean room3 = false;
+    private boolean room4 = false;
+    private boolean room5 = false;
+    private boolean room6 = false;
+    private boolean room7 = false;
+    private boolean room8 = false;
+
+    private long lastSpacePressTime = 0;
+    private final int spaceCooldown = 500;
 
     public GraphicsPanel() {
         player = new Player();
@@ -55,9 +67,7 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-//        pokemon.add(new Pokemon("charizard", "fire", 170, "Flamethrower", 40, "Focus Blast", 90, "Roar", 30)); //90 dmg with 50% of missing, All jhave chanceo f missing except Scratch
-//        pokemon.add(new Pokemon("greninja", "water", 130, "Water Shuriken", 50, "Water Gun", 0, "Tackle", 25));
-//        pokemon.add(new Pokemon("goku", "everything", 1000, "Kamehameha", 75, "Kaioken", 0, "Spirit Bomb", 500)); // Spirit bomb with 10% chance, Kmehame with75% chance
+
         pressedKeys = new boolean[128];
         addKeyListener(this);
         addMouseListener(this);
@@ -98,12 +108,24 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         door2Y += num;
     }
 
+    private boolean isSpacePressed() {
+        if (pressedKeys[32]) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastSpacePressTime >= spaceCooldown) {
+                lastSpacePressTime = currentTime;
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         //g.drawImage(background, -1845, -935, 2700, 1750, null);
         g.drawImage(background, xBack, yBack, backWidth, backHeight, null);
         g.drawRect(door1X, door1Y, 55, 55);
+        g.drawRect(door2X, door2Y, 55, 55);
         g.drawRect(470, 200, 90, 90);
 
         if (pressedKeys[65]) { //A
@@ -131,14 +153,60 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             if (bottomSide <= 290) {
                 updateY(3);
             }
-        } else if (pressedKeys[32] && door1.intersects(character)) {
-          try {
-              background = ImageIO.read(new File("yeah/src/room1.png"));
-          } catch (IOException e) {
-              System.out.println(e.getMessage());
-          }
-            xBack = -800;
-            yBack = -690;
+        } else if (room1 && door2.intersects(character) && isSpacePressed()){
+            change(2);
+            room1 = false;
+            room2 = true;
+        } else if (room1 && door2.intersects(character) && isSpacePressed()){
+            reset();
+        } else if (room2 && door1.intersects(character) && isSpacePressed()){
+            change(3);
+            room2 = false;
+            room3 = true;
+        } else if (room2 && door2.intersects(character) && isSpacePressed()){
+            reset();
+            room2 = false;
+            room1 = true;
+        } else if (room3 && door1.intersects(character) && isSpacePressed()){
+            change(4);
+            room3 = false;
+            room4 = true;
+        } else if (room3 && door2.intersects(character) && isSpacePressed()){
+            reset();
+            room3 = false;
+            room1 = true;
+        } else if (room4 && door2.intersects(character) && isSpacePressed()){
+            change(5);
+            room4 = false;
+            room5 = true;
+        } else if (room4 && door1.intersects(character) && isSpacePressed()){
+            reset();
+            room4 = false;
+            room1 = true;
+        } else if (room5 && door1.intersects(character) && isSpacePressed()){
+            change(6);
+            room5 = false;
+            room6 = true;
+        } else if (room5 && door2.intersects(character) && isSpacePressed()){
+            reset();
+            room5 = false;
+            room1 = true;
+        } else if (room6 && door2.intersects(character) && isSpacePressed()){
+            change(7);
+            room6 = false;
+            room7 = true;
+        } else if (room6 && door1.intersects(character) && isSpacePressed()){
+            reset();
+            room6 = false;
+            room1 = true;
+        } else if (room7 && door1.intersects(character) && isSpacePressed()){
+            change(8);
+            room7 = false;
+            room8 = true;
+        } else if (room7 && door2.intersects(character) && isSpacePressed()){
+            reset();
+            room7 = false;
+            room1 = true;
         } else {
             g.drawImage(idle, 470, 200, 90, 90, null);
         }
@@ -173,6 +241,22 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         }
     }
 
+
+    public void reset(){
+        try {
+            background = ImageIO.read(new File("yeah/src/background1.png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void change (int num){
+        try {
+            background = ImageIO.read(new File("yeah/src/background" + num  + ".png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
