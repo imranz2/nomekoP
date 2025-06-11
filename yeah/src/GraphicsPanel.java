@@ -128,9 +128,6 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         super.paintComponent(g);
         //g.drawImage(background, -1845, -935, 2700, 1750, null);
         g.drawImage(background, xBack, yBack, backWidth, backHeight, null);
-        g.drawRect(door1X, door1Y, 55, 55);
-        g.drawRect(470, 200, 90, 90);
-
 
         if (pressedKeys[65]) { //A
             g.drawImage(player.getLeft().getActiveFrame(), 470, 200, 90, 90, null);
