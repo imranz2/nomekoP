@@ -132,11 +132,11 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
                 updateY(3);
             }
         } else if (pressedKeys[32] && door1.intersects(character)) {
-            try {
-                background = ImageIO.read(new File("yeah/src/room1.png"));
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+        //  try {
+        //      background = ImageIO.read(new File("yeah/src/room1.png"));
+        //  } catch (IOException e) {
+        //      System.out.println(e.getMessage());
+        //  }
             xBack = -800;
             yBack = -690;
         } else {
