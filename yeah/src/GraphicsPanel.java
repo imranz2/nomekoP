@@ -11,6 +11,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.*;
 
 public class GraphicsPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
+    private Clip musicClip;
+    private Clip victoryClip;
+    private boolean victoryPlayed = false;
     private BufferedImage background;
     private BufferedImage idle;
     private Timer timer;
@@ -204,6 +207,15 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
             change(8);
             room7 = false;
             room8 = true;
+            if (musicClip != null && musicClip.isRunning()) {
+                musicClip.stop();
+                musicClip.close();
+            }
+
+            if (!victoryPlayed) {
+                playVictory();
+                victoryPlayed = true;
+            }
         } else if (room7 && door2.intersects(character) && isSpacePressed()){
             reset();
             room7 = false;
@@ -257,10 +269,10 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         File audioFile = new File("yeah\\src\\victory.wav");
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioStream);
-            clip.start();
-            clip.loop(Clip.LOOP_CONTINUOUSLY); // repeats song
+            victoryClip = AudioSystem.getClip();
+            victoryClip.open(audioStream);
+            victoryClip.start();
+            victoryClip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -272,10 +284,10 @@ public class GraphicsPanel extends JPanel implements ActionListener, KeyListener
         File audioFile = new File("yeah\\src\\music.wav");
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioStream);
-            clip.start();
-            clip.loop(Clip.LOOP_CONTINUOUSLY); // repeats song
+            musicClip = AudioSystem.getClip();
+            musicClip.open(audioStream);
+            musicClip.start();
+            musicClip.loop(Clip.LOOP_CONTINUOUSLY); // repeats song
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
